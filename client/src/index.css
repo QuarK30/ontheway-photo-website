@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ontheway-bg: 15 23 42;
+  --ontheway-surface: 30 41 59;
+  --ontheway-border: 51 65 85;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: rgb(var(--ontheway-bg));
+  color: rgb(248 250 252);
+}
+
+.ontheway-page-enter {
+  animation: ontheway-fade-in 0.25s ease-out;
+}
+
+@keyframes ontheway-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ontheway-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(51 65 85) 25%,
+    rgb(71 85 105) 50%,
+    rgb(51 65 85) 75%
+  );
+  background-size: 200% 100%;
+  animation: ontheway-skeleton-shine 1.2s ease-in-out infinite;
+}
+
+@keyframes ontheway-skeleton-shine {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* 地图区域：自定义小手光标，黑色轮廓明显，浅色地图上易辨认 */
+.ontheway-map .leaflet-container {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23f0f0f0' stroke='%23000' stroke-width='2.5' stroke-linejoin='round' d='M16 5c-2.2 0-3.5 1.5-3.5 3.5V11h-3c-1.2 0-2.2 1-2.2 2.2v7.5c0 1.9 1.5 3.5 3.5 3.5h1.2c1 0 1.9-.4 2.5-1l4.2-4.2c.7-.7 1.1-1.6 1.1-2.5V9.2c0-1.2-1-2.2-2.2-2.2h-1.2V8.5C19.5 6.5 18 5 16 5z'/%3E%3C/svg%3E") 16 16, grab;
+}
+.ontheway-map .leaflet-container.leaflet-grabbing {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23e0e0e0' stroke='%23000' stroke-width='2.5' stroke-linejoin='round' d='M16 6c-2 0-3.5 1.5-3.5 3.2V11h-2.8c-1.1 0-2 .9-2 2v7.2c0 1.8 1.4 3.2 3.2 3.2h1.2c.9 0 1.7-.4 2.3-1l3.8-3.8c.6-.6 1-1.5 1-2.4V9.2c0-1.1-.9-2-2-2h-1V8.2C19.5 6.6 18 6 16 6z'/%3E%3C/svg%3E") 16 16, grabbing;
+}
+
+.ontheway-map .leaflet-overlay-pane circle {
+  filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.8));
+}

@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment (never commit secrets)
+.env
+.env.local
+.env.*.local
+server/.env
+
+# Build output
+dist/
+client/dist/
+server/dist/
+
+# Uploads (server; deploy platform may use ephemeral disk)
+server/uploads/
+
+# IDE / OS
+.DS_Store
+*.log
+.idea/
+.vscode/
+
+# Optional
+*.tsbuildinfo
