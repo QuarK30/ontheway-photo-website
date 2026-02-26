@@ -160,6 +160,7 @@ function PhotoForm({ photo, onClose, onSuccess }: PhotoFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [uploadDurationSec, setUploadDurationSec] = useState<number | null>(null);
 
   function validateLatLng(latN: number, lngN: number): string | null {
     if (Number.isNaN(latN) || Number.isNaN(lngN)) return "请填写有效经纬度";
@@ -212,7 +213,12 @@ function PhotoForm({ photo, onClose, onSuccess }: PhotoFormProps) {
         form.append("lat", String(latN));
         form.append("lng", String(lngN));
         form.append("image", file);
-        await api.post("/photos", form);
+        const start = Date.now();
+        await api.post("/photos", form, { timeout: 120000 });
+        const elapsed = (Date.now() - start) / 1000;
+        setUploadDurationSec(elapsed);
+        setTimeout(() => onSuccess(), 1800);
+        return;
       }
       onSuccess();
     } catch (err: unknown) {
@@ -234,6 +240,11 @@ function PhotoForm({ photo, onClose, onSuccess }: PhotoFormProps) {
         <h2 className="text-lg font-semibold text-slate-100 mb-4">{photo ? "编辑照片" : "上传照片"}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <p className="text-sm text-red-400">{error}</p>}
+          {uploadDurationSec != null && (
+            <p className="text-sm text-cyan-400">
+              上传成功，耗时 {uploadDurationSec.toFixed(1)} 秒
+            </p>
+          )}
           <div>
             <label className="block text-xs text-slate-400 mb-1">标题</label>
             <input
