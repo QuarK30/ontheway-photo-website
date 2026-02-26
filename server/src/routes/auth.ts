@@ -14,8 +14,15 @@ router.post("/login", async (req, res) => {
       res.status(400).json({ message: "请提供邮箱和密码" });
       return;
     }
-    const admin = await Admin.findOne({ email: String(email).trim().toLowerCase() }).lean();
-    if (!admin || !verifyPassword(password, admin.passwordHash)) {
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const admin = await Admin.findOne({ email: normalizedEmail }).lean();
+    if (!admin) {
+      console.warn("[auth] 登录失败：未找到管理员邮箱", normalizedEmail);
+      res.status(401).json({ message: "邮箱或密码错误" });
+      return;
+    }
+    if (!verifyPassword(password, admin.passwordHash)) {
+      console.warn("[auth] 登录失败：密码错误", normalizedEmail);
       res.status(401).json({ message: "邮箱或密码错误" });
       return;
     }
@@ -26,8 +33,9 @@ router.post("/login", async (req, res) => {
     );
     res.json({ token, email: admin.email });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "登录失败" });
+    console.error("[auth] 登录异常", err);
+    const msg = err instanceof Error ? err.message : "登录失败";
+    res.status(500).json({ message: `登录失败：${msg}` });
   }
 });
 

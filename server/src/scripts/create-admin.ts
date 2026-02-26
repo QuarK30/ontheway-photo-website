@@ -18,9 +18,14 @@ async function main() {
     console.error("请在 .env 中设置 ADMIN_EMAIL 和 ADMIN_PASSWORD");
     process.exit(1);
   }
-  const uri = process.env.MONGODB_URI;
-  if (!uri) {
+  const raw = process.env.MONGODB_URI;
+  if (!raw) {
     console.error("请在 .env 中设置 MONGODB_URI");
+    process.exit(1);
+  }
+  const uri = raw.trim().replace(/\r?\n/g, "");
+  if (!uri.startsWith("mongodb://") && !uri.startsWith("mongodb+srv://")) {
+    console.error("MONGODB_URI 格式错误，应以 mongodb:// 或 mongodb+srv:// 开头");
     process.exit(1);
   }
   await mongoose.connect(uri);

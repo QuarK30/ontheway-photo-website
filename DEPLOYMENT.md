@@ -22,13 +22,15 @@
 - **启动**：`npm start`（即 `node dist/index.js`）
 - **环境变量**（部署平台需配置）：
 
-| 变量名 | 必填 | 说明 |
-|--------|------|------|
-| `MONGODB_URI` | 是 | **云端** MongoDB 连接串（不能再用本机 `127.0.0.1`） |
-| `JWT_SECRET` | 是 | 生产环境请改为随机长字符串（如 32 位以上） |
-| `PORT` | 否 | 多数平台自动注入，可不填 |
-| `CORS_ORIGIN` | 可选 | 填前端地址如 `https://xxx.vercel.app` 可限制跨域；不填则允许所有来源 |
-| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | 可选 | 若要在部署后创建管理员，可设；或之后在平台 Shell 里跑脚本时再设 |
+
+| 变量名                              | 必填  | 说明                                              |
+| -------------------------------- | --- | ----------------------------------------------- |
+| `MONGODB_URI`                    | 是   | **云端** MongoDB 连接串（不能再用本机 `127.0.0.1`）          |
+| `JWT_SECRET`                     | 是   | 生产环境请改为随机长字符串（如 32 位以上）                         |
+| `PORT`                           | 否   | 多数平台自动注入，可不填                                    |
+| `CORS_ORIGIN`                    | 可选  | 填前端地址如 `https://xxx.vercel.app` 可限制跨域；不填则允许所有来源 |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | 可选  | 若要在部署后创建管理员，可设；或之后在平台 Shell 里跑脚本时再设             |
+
 
 - **说明**：Render 免费版实例**无持久化磁盘**，重启后 `uploads` 目录会清空，新上传的图片会丢失。若需持久化，可后续升级 Render 持久化磁盘或改用对象存储（如 S3）。
 
@@ -37,9 +39,11 @@
 - **构建**：`npm install` → `npm run build`（产出在 `client/dist/`）
 - **环境变量**：
 
-| 变量名 | 必填 | 说明 |
-|--------|------|------|
-| `VITE_API_URL` | 是 | 后端对外地址，如 `https://你的服务名.onrender.com`（末尾不要加 `/`） |
+
+| 变量名            | 必填  | 说明                                               |
+| -------------- | --- | ------------------------------------------------ |
+| `VITE_API_URL` | 是   | 后端对外地址，如 `https://你的服务名.onrender.com`（末尾不要加 `/`） |
+
 
 ---
 
@@ -49,28 +53,19 @@
 
 ### Windows
 
-1. **下载**  
-   打开 [https://git-scm.com/download/win](https://git-scm.com/download/win)，浏览器会自动下载 64 位安装包（或按页面提示选 32 位）。
-
-2. **安装**  
-   - 双击下载的 `.exe`，一路 **Next**。  
-   - 默认选项即可；若遇到「Choosing the default editor」，可保持 **Use Visual Studio Code** 或选 **Notepad++**。  
-   - 「Adjusting your PATH environment」建议选 **Git from the command line and also from 3rd-party software**，这样在 PowerShell 和 CMD 里都能用 `git`。  
-   - 最后 **Install**，完成后 **Finish**。
-
-3. **验证**  
-   - 关闭并重新打开 **PowerShell** 或 **命令提示符**（重要：必须新开窗口才能识别到 `git`）。  
-   - 输入：`git --version`  
-   - 若显示类似 `git version 2.xx.x` 即表示安装成功。
-
-4. **设置用户身份（首次使用必做）**  
-   Git 提交时需要记录「谁提交的」，请在本机执行下面两行（把邮箱和名字换成您的，**邮箱建议与 GitHub 账号一致**）：
-
-   ```bash
-   git config --global user.email "您的邮箱@example.com"
-   git config --global user.name "您的名字或 GitHub 用户名"
-   ```
-
+1. **下载**
+  打开 [https://git-scm.com/download/win](https://git-scm.com/download/win)，浏览器会自动下载 64 位安装包（或按页面提示选 32 位）。
+2. **安装**
+  - 双击下载的 `.exe`，一路 **Next**。  
+  - 默认选项即可；若遇到「Choosing the default editor」，可保持 **Use Visual Studio Code** 或选 **Notepad++**。  
+  - 「Adjusting your PATH environment」建议选 **Git from the command line and also from 3rd-party software**，这样在 PowerShell 和 CMD 里都能用 `git`。  
+  - 最后 **Install**，完成后 **Finish**。
+3. **验证**
+  - 关闭并重新打开 **PowerShell** 或 **命令提示符**（重要：必须新开窗口才能识别到 `git`）。  
+  - 输入：`git --version`  
+  - 若显示类似 `git version 2.xx.x` 即表示安装成功。
+4. **设置用户身份（首次使用必做）**
+  Git 提交时需要记录「谁提交的」，请在本机执行下面两行（把邮箱和名字换成您的，**邮箱建议与 GitHub 账号一致**）：
    例如：`git config --global user.email "hcy@gmail.com"`、`git config --global user.name "hcy"`。  
    设置完成后，再执行 8.2 里的 `git commit` 就不会再提示 "Author identity unknown"。
 
@@ -91,123 +86,153 @@
 
 **前提**：已按 8.1.5 安装 Git，且终端里执行 `git --version` 能显示版本号。
 
-1. **确认不提交敏感与本地文件**  
-   项目根目录已提供 `.gitignore`，会排除：
-   - `node_modules/`、`.env`、`server/.env`
-   - `server/uploads/`、`dist/`、`client/dist/`
-
-2. **在 GitHub 建仓**  
-   - 打开 [https://github.com/new](https://github.com/new)  
-   - Repository name 填：`photo-website`（或您喜欢的名字）  
-   - 选 Public 或 Private → 点击 **Create repository**  
-   - **不要**勾选 "Add a README"（您本地已有代码）
-
-3. **在本机项目根目录执行**（若尚未初始化 git）：
-
-   ```bash
+1. **确认不提交敏感与本地文件**
+  项目根目录已提供 `.gitignore`，会排除：
+  - `node_modules/`、`.env`、`server/.env`
+  - `server/uploads/`、`dist/`、`client/dist/`
+2. **在 GitHub 建仓**
+  - 打开 [https://github.com/new](https://github.com/new)  
+  - Repository name 填：`photo-website`（或您喜欢的名字）  
+  - 选 Public 或 Private → 点击 **Create repository**  
+  - **不要**勾选 "Add a README"（您本地已有代码）
+3. **配置 SSH 公钥（首次推送必做）**
+  使用 SSH 推送前，需把本机公钥添加到 GitHub：
+  - 若还没有 SSH 密钥：在 PowerShell 执行 `ssh-keygen -t ed25519 -C "您的邮箱"`，一路回车。
+  - 用记事本打开 `C:\Users\你的用户名\.ssh\id_ed25519.pub`，复制全部内容。
+  - 在 GitHub 网页右上角头像 → **Settings** → 左侧 **SSH and GPG keys** → **New SSH key**，Title 随意（如「我的电脑」），Key 里粘贴公钥 → **Add SSH key**。
+4. **在本机项目根目录执行**（若尚未初始化 git）：
+  ```bash
    cd d:\workspace\photo-website
    git init
    git add .
    git commit -m "OnTheWay: initial commit for deployment"
    git branch -M main
-   git remote add origin https://github.com/你的用户名/photo-website.git
+   git remote add origin git@github.com:你的用户名/仓库名.git
    git push -u origin main
-   ```
-
+  ```
    若已初始化过 git，只需：
-
-   ```bash
-   git add .
-   git commit -m "Prepare for deployment"
-   git remote add origin https://github.com/你的用户名/photo-website.git
-   git push -u origin main
-   ```
-
-   将 `你的用户名` 和仓库名换成您实际的信息。
+   将 `你的用户名` 和 `仓库名` 换成您实际的信息（例如：`git@github.com:QuarK30/ontheway-photo-website.git`）。
+5. **若 `git push` 报错**
+  - **Permission denied / 认证失败**：说明 SSH 公钥未添加或填错，请按上面第 3 步重新添加公钥。  
+  - **Connection was reset**（若您改用 HTTPS 地址时出现）：多为网络访问 GitHub 不稳定，建议改回 SSH 地址再推送：  
+  `git remote set-url origin git@github.com:你的用户名/仓库名.git`，然后执行 `git push -u origin main`。
 
 ---
 
 ## 8.3 部署后端（以 Render 为例）
 
+**建议**：先完成 **8.5 步骤一、二**（在 Railway 创建 MongoDB 并复制连接串），再执行下面步骤，这样到第 4 步时可直接粘贴 `MONGODB_URI`。
+
 1. 打开 [https://render.com](https://render.com)，注册/登录（可用 GitHub 登录）。
-
 2. **New → Web Service**，连接 GitHub，选择刚推送的 `photo-website` 仓库。
-
 3. **配置**：
-   - **Name**：`ontheway-server`（或任意）
-   - **Root Directory**：填 `server`（重要：后端代码在 server 目录）
-   - **Runtime**：Node
-   - **Build Command**：`npm install && npm run build`
-   - **Start Command**：`npm start`
-
+  - **Name**：`ontheway-server`（或任意）
+  - **Root Directory**：填 `server`（重要：后端代码在 server 目录）
+  - **Runtime**：Node
+  - **Build Command**：`npm install && npm run build`
+  - **Start Command**：`npm start`
 4. **Environment** 中添加变量：
+  **请先按下面 8.5 在 Railway 创建 MongoDB 并拿到连接串**，再回到此处在 Render 的 **Environment** 里点 **Add Environment Variable**，逐条添加：
 
-   | Key | Value |
-   |-----|--------|
-   | `MONGODB_URI` | 从 8.5 **Railway MongoDB** 复制的连接串 |
-   | `JWT_SECRET` | 生产用随机长字符串（可自己生成一段 32 位以上字符） |
-   | `CORS_ORIGIN` | 可选，前端地址如 `https://xxx.vercel.app`（部署完前端后再填） |
+  | Key           | Value                                                                                                                                                  |
+  | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `MONGODB_URI` | 从 8.5 复制的 **Railway MongoDB 连接串**（整段粘贴）                                                                                                                |
+  | `JWT_SECRET`  | 生产用随机长字符串，按下面「JWT_SECRET 如何生成」生成后粘贴                                                                                                                    |
+  | `CORS_ORIGIN` | 可选。可不填或稍后补填：**无先后要求**，可先完成第 5 步 Create Web Service，等 8.4 部署完前端拿到地址后，再进 Render 该服务的 **Environment** 里添加 `CORS_ORIGIN` 并保存（会触发重新部署）。填上前端地址可限制仅你的站点能跨域请求。 |
 
-5. 点击 **Create Web Service**。部署完成后会得到一个 URL，例如：  
-   `https://ontheway-server.onrender.com`  
+   **JWT_SECRET 如何生成**（任选一种方式，得到一串随机字符后复制到 Value 即可）：
+  - **本机已装 Node.js**：在 PowerShell 或终端执行下面一行，会输出一串随机字符，复制整行结果作为 Value：
+    ```bash
+    node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+    ```
+  - **PowerShell（无需 Node）**：在 PowerShell 执行下面一行，会输出一串随机字符，复制作为 Value：
+    ```powershell
+    [Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }) -as [byte[]])
+    ```
+  - **不想用命令**：可用任意「随机字符串生成」网页生成 32 位以上字母+数字串，或自己编一段不公开的长字符串（至少 32 位），填进 Value。**切勿使用文档里的示例（如 your-secret-key-change-in-production）**。
+5. 点击 **Create Web Service**。部署完成后会得到一个 URL，例如：
+  `https://ontheway-server.onrender.com`  
    **请复制保存**，前端环境变量 `VITE_API_URL` 要填这个地址（末尾不要 `/`）。
-
-6. **创建管理员**（若部署前未在 Railway/Atlas 等库中创建过）：  
-   - 在 Render 该服务的 **Shell** 里执行：  
-     `npm run create-admin`  
-   - 执行前在 **Environment** 中临时加上 `ADMIN_EMAIL`、`ADMIN_PASSWORD`，执行完可删或保留。
+6. **创建管理员**（若部署前未在 Railway/Atlas 等库中创建过）：
+  Render **免费版不支持 Shell**（点 Shell 会提示升级到 Starter），可用下面**本机运行**方式，在**同一套云端数据库**里创建管理员，无需付费。
+   **推荐：在本机用云端连接串跑一次 create-admin**
+  - 在您本机打开项目，进入 `server` 目录。
+  - 临时建一个只用于本次的 `.env.admin`（或直接用现有 `.env` 临时改）：在 `server` 目录下保证有这三项（**MONGODB_URI 填 8.5 里复制的 Railway 连接串**，和 Render 用的是同一库）：
+    ```
+    MONGODB_URI=你的Railway_MongoDB连接串
+    ADMIN_EMAIL=你的管理员邮箱
+    ADMIN_PASSWORD=你要设的密码
+    ```
+  - 在 `server` 目录下执行（若用 `.env.admin` 需先重命名为 `.env` 或见下条）：
+    ```bash
+    npm run create-admin
+    ```
+    若不想改现有 `.env`，可在 PowerShell 里一行搞定（把三处替换成你的实际值）：
+    ```powershell
+    $env:MONGODB_URI="你的Railway连接串"; $env:ADMIN_EMAIL="你的邮箱"; $env:ADMIN_PASSWORD="你的密码"; npm run create-admin
+    ```
+  - 看到「管理员账号创建成功」即完成。之后用该邮箱和密码在**已部署的前端**登录后台即可。
+   **若使用 Render 付费版（Starter）**：可在该服务的 **Shell**（左侧或顶部进入）里先设 `ADMIN_EMAIL`、`ADMIN_PASSWORD` 环境变量，再执行 `npm run create-admin`。
 
 ---
 
 ## 8.4 部署前端（以 Vercel 为例）
 
 1. 打开 [https://vercel.com](https://vercel.com)，用 GitHub 登录。
-
 2. **Add New → Project**，导入 `photo-website` 仓库。
-
 3. **配置**：
-   - **Root Directory**：点击 **Edit**，改为 `client`
-   - **Framework Preset**：Vite（一般会自动识别）
-   - **Build Command**：`npm run build`（默认即可）
-   - **Output Directory**：`dist`（Vite 默认）
-
+  - **Root Directory**：点击 **Edit**，改为 `client`
+  - **Framework Preset**：Vite（一般会自动识别）
+  - **Build Command**：`npm run build`（默认即可）
+  - **Output Directory**：`dist`（Vite 默认）
 4. **Environment Variables** 添加：
-   - **Key**：`VITE_API_URL`  
-   - **Value**：`https://ontheway-server.onrender.com`（换成您 8.3 得到的后端地址，**不要**末尾斜杠）
+  - **Key**：`VITE_API_URL`  
+  - **Value**：`https://ontheway-server.onrender.com`（换成您 8.3 得到的后端地址，**不要**末尾斜杠）
+5. 点击 **Deploy**。部署完成后会得到前端访问地址，如：
+  `https://photo-website-xxx.vercel.app`
 
-5. 点击 **Deploy**。部署完成后会得到前端访问地址，如：  
-   `https://photo-website-xxx.vercel.app`
+### 访问管理员后台
+
+管理员入口是前端的 **/admin** 路径，在浏览器中这样打开：
+
+- **登录页**：`你的前端地址/admin/login`  
+例如：`https://photo-website-xxx.vercel.app/admin/login`
+- **后台首页**（未登录会先跳到登录）：`你的前端地址/admin` 或 `你的前端地址/admin/photos`
+
+**操作步骤**：在地址栏输入「你的 Vercel 前端域名 + `/admin/login`」，回车 → 用 8.3 第 6 步创建的管理员邮箱和密码登录 → 登录成功后会进入照片管理（/admin/photos），可再点「留言管理」进入 /admin/comments。
 
 ---
 
 ## 8.5 云端 MongoDB：Railway MongoDB（推荐）
 
-您阶段二用的是**本地 MongoDB**；上线必须改为**云端数据库**。以下按 **Railway MongoDB** 操作即可，无需 IP 白名单。
+您阶段二用的是**本地 MongoDB**；上线必须改为**云端数据库**。建议**在 8.3 填 Render 环境变量之前**先完成本节，拿到连接串后再去 Render 第 4 步粘贴。
 
-### 步骤一：在 Railway 创建 MongoDB
+### 步骤一：在 Railway 创建项目并添加 MongoDB
 
 1. 打开 [https://railway.app](https://railway.app)，用 **GitHub 账号登录**。
 2. 点击 **New Project**（新建项目）。
-3. 在「Add a plugin」或「Deploy from GitHub」的界面中，选择 **Provision MongoDB**（或 **Add Plugin** → 在插件列表里选 **MongoDB**）。
-4. 创建完成后，项目里会出现一个 **MongoDB** 服务（卡片上写 MongoDB）。
+3. 出现 **「What would you like to create?」** 界面（上方有搜索框，下面是一排选项）时：
+  - 在列表中点击 **Database**（三个圆柱体图标的选项，**不要**选 GitHub Repository、Template 等）。
+4. 若接下来让选择数据库类型，选 **MongoDB**；若直接开始创建，则等待几秒。
+5. 创建完成后，当前项目里会出现一个 **MongoDB** 服务卡片（名称里带 MongoDB）。
 
-### 步骤二：拿到连接串
+### 步骤二：在 Railway 里查看变量并复制连接串
 
-1. 点击该 **MongoDB** 服务卡片进入详情。
-2. 打开 **Variables**（变量）或 **Connect** 标签页。
-3. 找到 **MONGO_URL** 或 **MONGODB_URI** 或 **DATABASE_URL**（名称因 Railway 版本可能略有不同），点击 **Copy** 或复制其**值**。  
-   - 连接串形如：`mongodb://mongo:密码@主机:端口/railway` 或 `mongodb+srv://...`
-4. **建议在连接串里指定数据库名**（若没有 `/数据库名`）：  
-   - 若串末尾是 `.../railway` 或 `.../` 带库名，可沿用，或改成 `/ontheway` 与本地一致。  
-   - 若串里没有库名，在 `?` 前加上 `/ontheway`，例如：  
-     `...mongodb.net/ontheway?retryWrites=...`
+1. 点进 **MongoDB** 服务 → **Variables**（或 Connect），复制 **MONGO_PUBLIC_URL**（公网连接串，给 Render 和本机用）。若没有该项，见下条。
+2. 若只有 **MONGO_URL** 且串里是 `mongodb.railway.internal`，需先开公网：
+  - 该服务 **Settings** → **Networking** → **TCP Proxy** → 添加，端口填 **27017**。
+  - Railway 会给出公网域名和端口。Variables 里若有 **MONGO_PUBLIC_URL** 直接复制；否则自己拼：`mongodb://mongo:密码@公网域名:公网端口`（密码从 **MONGOPASSWORD** 抄）。
+3. 用这条**公网连接串**填到 Render 的 `MONGODB_URI`，本机 create-admin 也用这条。
 
-### 步骤三：填到后端环境变量
+### 步骤三：把连接串填到 Render 的 Environment
 
-- 在 **Render**（或您部署后端的平台）该服务的 **Environment** 里，添加变量：  
-  - **Key**：`MONGODB_URI`  
-  - **Value**：粘贴刚才复制的 **完整连接串**  
-- 保存后，重新部署一次后端（或等自动部署），日志里应出现 `MongoDB connected`。
+1. 打开 **Render** 上您创建的后端服务（8.3 里建的 Web Service）。
+2. 左侧或顶部进入 **Environment**。
+3. 点击 **Add Environment Variable**（或 **Add Variable**）：
+  - **Key** 填：`MONGODB_URI`  
+  - **Value** 填：粘贴步骤二复制的**完整连接串**
+4. 保存（Save）。若服务已部署过，Render 会自动重新部署；若尚未部署，继续 8.3 第 5 步点击 **Create Web Service**。
+5. 部署完成后在 **Logs** 里应能看到 `MongoDB connected`，表示连接成功。
 
 ### 可选：后端也部署在 Railway
 
@@ -249,3 +274,4 @@
 - **本地**：继续用 `server/.env` 里的 `MONGODB_URI=mongodb://127.0.0.1:27017/ontheway` 开发即可。  
 - **上线**：按 8.5 在 **Railway** 创建 MongoDB，把连接串填到后端 `MONGODB_URI`，不能再用本机地址。  
 - 完成 8.2～8.5 后，任何人通过您的前端网址即可访问 OnTheWay。
+

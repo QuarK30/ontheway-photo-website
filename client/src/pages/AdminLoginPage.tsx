@@ -20,10 +20,16 @@ export function AdminLoginPage() {
       setStoredToken(res.data.token);
       navigate(from, { replace: true });
     } catch (err: unknown) {
-      const msg = err && typeof err === "object" && "response" in err
-        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
-        : "登录失败";
-      setError(msg || "登录失败");
+      const ax = err && typeof err === "object" && "response" in err
+        ? (err as { response?: { status?: number; data?: { message?: string }; statusText?: string } }).response
+        : null;
+      const serverMsg = ax?.data?.message;
+      const status = ax?.status;
+      let msg = serverMsg || "登录失败";
+      if (status != null) msg = `[${status}] ${msg}`;
+      else if (!ax) msg = "网络错误或超时，请检查后端地址与网络";
+      setError(msg);
+      if (process.env.NODE_ENV === "development" && err) console.error("登录错误", err);
     } finally {
       setLoading(false);
     }
