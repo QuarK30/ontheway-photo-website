@@ -216,10 +216,13 @@ function PhotoForm({ photo, onClose, onSuccess }: PhotoFormProps) {
       }
       onSuccess();
     } catch (err: unknown) {
-      const msg = err && typeof err === "object" && "response" in err
-        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
-        : "操作失败";
-      setError(msg || "操作失败");
+      const ax = err && typeof err === "object" && "response" in err
+        ? (err as { response?: { status?: number; data?: { message?: string } } }).response
+        : null;
+      const msg = ax?.data?.message;
+      const status = ax?.status;
+      const fallback = status != null ? `请求失败 (${status})` : "网络错误或请求超时，请检查后端地址与网络";
+      setError(msg || fallback);
     } finally {
       setSubmitting(false);
     }
